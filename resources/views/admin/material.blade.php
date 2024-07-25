@@ -35,10 +35,6 @@
         display: flex !important;
         justify-content: space-evenly;
     }
-
-    tr.even {
-        background-color: #f5f5f5;
-    }
 </style>
 
 <body id="page-top">
@@ -199,7 +195,7 @@
                                                 <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
                                                     <i class=" fas fa-pen"></i>
                                                 </a>
-                                                <a href="" class="btn btn-danger btn-circle btn-sm" data-id="{{$value->id}}">
+                                                <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-id="{{$value->id}}">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </td>
@@ -246,6 +242,31 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="myModal-delete" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content" style="margin-top: 70px;">
+                <form id="edit-form" action="" method="DELETE">
+                    @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Material</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Material</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
 
 
     <!-- Logout Modal-->

@@ -5,32 +5,46 @@ $.ajaxSetup({
 });
 $(document).ready(function () {
     var table = $("#dataTable").DataTable();
+    const btnDeletes = document.querySelectorAll(".btn-delete");
 
     function clickButtonDelete() {
-        $(".btn-danger").click(function (e) {
-            e.preventDefault();
+        btnDeletes.forEach((element) => {
+            element.addEventListener("click", function (e) {
+                e.preventDefault();
+                $("#myModal-delete").modal("show");
 
-            var id = $(this).data("id");
-            $(this).prop("disabled", true);
+                var id = $(this).data("id");
+                console.log("Material-delete-Id :", id);
 
-            $.ajax({
-                url: "/admin/material/destroy/" + id,
-                type: "DELETE",
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        $("#material-" + id).remove();
-                        console.log("Material deleted successfully!");
-                    } else {
-                        console.error(
-                            "Error deleting material:",
-                            response.message
-                        );
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Error:", textStatus, errorThrown);
-                },
+                $("#confirm-delete-btn").data("id", id);
+
+                // Confirm delete Button
+                $("#confirm-delete-btn").click(function (e) {
+                    e.preventDefault();
+                    var deleteId = $(this).data("id");
+                    console.log("Employ-confirm-delete-Id :", deleteId);
+
+                    $.ajax({
+                        url: "/admin/material/destroy/" + id,
+                        type: "DELETE",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                $("#material-" + id).remove();
+                                $("#myModal-delete").modal("hide");
+                                console.log("Material deleted successfully!");
+                            } else {
+                                console.error(
+                                    "Error deleting material:",
+                                    response.message
+                                );
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("Error:", textStatus, errorThrown);
+                        },
+                    });
+                });
             });
         });
     }

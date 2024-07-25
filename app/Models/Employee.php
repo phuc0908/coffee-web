@@ -140,4 +140,11 @@ class Employee extends Model
         $sql = 'DELETE FROM employees WHERE id = ?';
         DB::delete($sql, [$id]);
     }
+
+    public static function getWithPage($row)
+    {
+        $sql = "SELECT * FROM employees
+                LIMIT 1 OFFSET ?;";
+        return DB::select($sql, [$row]);
+    }
 }

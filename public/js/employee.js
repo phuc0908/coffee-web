@@ -8,7 +8,6 @@ $(document).ready(function () {
     const btnDeletes = document.querySelectorAll(".btn-delete");
 
     function clickButtonDelete() {
-        // delete Button
         btnDeletes.forEach((element) => {
             element.addEventListener("click", function (e) {
                 e.preventDefault();
@@ -18,7 +17,6 @@ $(document).ready(function () {
                 console.log("Employ-delete-Id :", id);
 
                 $("#confirm-delete-btn").data("id", id);
-                $(this).prop("disabled", true);
 
                 // Confirm delete Button
                 $("#confirm-delete-btn").click(function (e) {
@@ -51,7 +49,7 @@ $(document).ready(function () {
         });
     }
 
-    function clickButtonUpdate() {
+    function clickButtonEdit() {
         $(".btn-warning").on("click", function (e) {
             e.preventDefault();
             var employeeId = $(this).data("id");
@@ -108,11 +106,11 @@ $(document).ready(function () {
         });
     }
     clickButtonDelete();
-    clickButtonUpdate();
+    clickButtonEdit();
 
     table.on("draw", function () {
         clickButtonDelete();
-        clickButtonUpdate();
+        clickButtonEdit();
     });
 });
 

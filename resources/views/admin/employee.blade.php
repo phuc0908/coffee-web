@@ -36,8 +36,8 @@
         justify-content: space-evenly;
     }
 
-    tr.even {
-        background-color: #f5f5f5;
+    div.modal-content {
+        width: 560px;
     }
 </style>
 
@@ -87,12 +87,31 @@
                                                 <input type="text" class="form-control" id="name" name="name" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="gend">Gender:</label>
-                                                <input type="text" class="form-control" id="gend" name="gender" autocomplete="off">
+                                                <label for="gend">Gender:</label> <br>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-left: 5px;">
+                                                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
+                                                    <label class="custom-control-label" for="customRadioInline1">Male</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="customRadioInline2">Female</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+                                                    <label class="custom-control-label" for="customRadioInline3">Other</label>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="role">Role:</label>
-                                                <input type="text" class="form-control" id="role" name="role" autocomplete="off">
+                                                <label class="mr-sm-2" for="inlineFormCustomSelect">Role:</label>
+                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                    <option selected disabled>Choose...</option>
+                                                    <option value="chef">Chef</option>
+                                                    <option value="cashier">Cashier</option>
+                                                    <option value="waiter">Waiter</option>
+                                                    <option value="barista">Barista</option>
+                                                    <option value="manager">Manager</option>
+                                                    <option value="waiter">Waiter</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="phon">Phone:</label>
@@ -103,8 +122,13 @@
                                                 <input type="text" class="form-control" id="addr" name="address" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="stat">Status:</label>
-                                                <input type="text" class="form-control" id="stat" name="status" autocomplete="off">
+                                                <label class="mr-sm-2" for="inlineFormCustomSelect">Status:</label>
+                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                    <option selected disabled>Choose...</option>
+                                                    <option value="working">Working</option>
+                                                    <option value="brobation">Brobation</option>
+                                                    <option value="resigned">Resigned</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -208,7 +232,7 @@
                                             <td>{{$value->role}}</td>
                                             <td>{{$value->address}}</td>
                                             <td>{{$value->created_at}}</td>
-                                            <td class="statusEmployee" class="statusEmployee" data-id="{{$value->status}}">{{$value->status}}</td>
+                                            <td class="statusEmployee" data-id="{{$value->status}}">{{$value->status}}</td>
                                             <td class="td-action">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fas fa-info-circle"></i>
@@ -276,7 +300,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn" data-id="{{$value->id}}">Delete Employee</button>
+                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Employee</button>
                     </div>
                 </form>
             </div>

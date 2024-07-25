@@ -5,14 +5,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\EmployeeController;
-
+use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\ReportController;
 
 Route::prefix("")->group(function () {
     Route::get('/', [HomeController::class, "index"])->name("index");
     Route::get('/about', [HomeController::class, 'showAbout'])->name('about');
     Route::get('/contact', [HomeController::class, 'showContact'])->name('contact');
 });
-
 
 Route::prefix("admin")->group(function () {
     Route::get('/', [DashboardController::class, "login"])->name("admin.login");
@@ -28,12 +28,30 @@ Route::prefix("admin")->group(function () {
         Route::delete('destroy/{id}', [MaterialController::class, 'destroy'])->name('admin.material.delete');
     });
 
+    // -------------------------------------------------------------------------------------------------------> STOCK
+    Route::prefix("stock")->group(function () {
+        Route::get('/', [StockController::class, "create"])->name("admin.stock.index");
+        Route::post('/add', [MaterialController::class, 'store'])->name("admin.stock.add");
+        Route::get('edit/{id}', [StockController::class, 'edit'])->name('admin.stock.edit');
+        Route::post('update/{id}', [StockController::class, 'update'])->name('admin.stock.update');
+        Route::delete('destroy/{id}', [StockController::class, 'destroy'])->name('admin.stock.delete');
+    });
 
+    // -------------------------------------------------------------------------------------------------------> EMPLOYEEs
     Route::prefix("employee")->group(function () {
         Route::get('/', [EmployeeController::class, "create"])->name("admin.employee.index");
         Route::post('/add', [EmployeeController::class, 'store'])->name("admin.employee.add");
         Route::get('edit/{id}', [EmployeeController::class, 'edit'])->name('admin.employee.edit');
         Route::post('update/{id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::delete('destroy/{id}', [EmployeeController::class, 'destroy'])->name('admin.employee.delete');
+    });
+
+    // -------------------------------------------------------------------------------------------------------> EMPLOYEEs
+    Route::prefix("report")->group(function () {
+        Route::get('/', [EmployeeController::class, "create"])->name("admin.report.index");
+        Route::post('/add', [EmployeeController::class, 'store'])->name("admin.report.add");
+        Route::get('edit/{id}', [EmployeeController::class, 'edit'])->name('admin.report.edit');
+        Route::post('update/{id}', [EmployeeController::class, 'update'])->name('admin.report.update');
+        Route::delete('destroy/{id}', [EmployeeController::class, 'destroy'])->name('admin.report.delete');
     });
 });
