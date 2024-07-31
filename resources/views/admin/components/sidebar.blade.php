@@ -47,6 +47,12 @@
              <i class="fas fa-fw fa-box"></i>
              <span>Stock</span></a>
      </li>
+     <!-- Nav Item - Product Tables -->
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.product.index')}}">
+             <i class="fas fa-fw fa-boxes"></i>
+             <span>Products</span></a>
+     </li>
      <!-- Nav Item - Report Tables -->
      <li class="nav-item">
          <a class="nav-link" href="{{ route('admin.material.index')}}">

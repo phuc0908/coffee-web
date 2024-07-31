@@ -27,6 +27,7 @@ class EmployeeController extends Controller
         // Create new obj
         $employee = new Employee();
         $employee->setName($request->name);
+        $employee->setGmail($request->gmail);
         $employee->setGender($request->gender);
         $employee->setRole($request->role);
         $employee->setPhone($request->phone);
@@ -60,15 +61,19 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         // Create new obj
         $employee = new Employee();
         $employee->setId($request->id);
         $employee->setName($request->name);
-        $employee->setGender($request->gender);
+        $employee->setGmail($request->gmail);
+        $employee->setGender($request->genderU);
         $employee->setRole($request->role);
         $employee->setPhone($request->phone);
         $employee->setAddress($request->address);
         $employee->setStatus($request->status);
+
+        // dd($employee);
 
         // Update this column
         $isUpdated = $employee->edit();

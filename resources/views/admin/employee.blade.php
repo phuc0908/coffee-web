@@ -87,23 +87,33 @@
                                                 <input type="text" class="form-control" id="name" name="name" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="gend">Gender:</label> <br>
-                                                <div class="custom-control custom-radio custom-control-inline" style="margin-left: 5px;">
-                                                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
-                                                    <label class="custom-control-label" for="customRadioInline1">Male</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadioInline2">Female</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadioInline3">Other</label>
+                                                <label for="name">Gmail:</label>
+                                                <label class="sr-only" for="gmail">Gmail</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">@</div>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="gmail" name="gmail">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="mr-sm-2" for="inlineFormCustomSelect">Role:</label>
-                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                <label for="">Gender:</label> <br>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-left: 5px;">
+                                                    <input type="radio" id="genderMale" name="gender" class="custom-control-input" checked value="male">
+                                                    <label class="custom-control-label" for="genderMale">Male</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="genderFemale" name="gender" class="custom-control-input" value="female">
+                                                    <label class="custom-control-label" for="genderFemale">Female</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="genderOther" name="gender" class="custom-control-input" value="other">
+                                                    <label class="custom-control-label" for="genderOther">Other</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="mr-sm-2" for="role">Role:</label>
+                                                <select class="custom-select mr-sm-2" id="role" name="role">
                                                     <option selected disabled>Choose...</option>
                                                     <option value="chef">Chef</option>
                                                     <option value="cashier">Cashier</option>
@@ -114,22 +124,23 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="phon">Phone:</label>
-                                                <input type="text" class="form-control" id="phon" name="phone" autocomplete="off">
+                                                <label for="phone">Phone:</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="addr">Address:</label>
-                                                <input type="text" class="form-control" id="addr" name="address" autocomplete="off">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="mr-sm-2" for="inlineFormCustomSelect">Status:</label>
-                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                <label class="mr-sm-2" for="status">Status:</label>
+                                                <select class="custom-select mr-sm-2" id="status" name="status">
                                                     <option selected disabled>Choose...</option>
                                                     <option value="working">Working</option>
                                                     <option value="brobation">Brobation</option>
                                                     <option value="resigned">Resigned</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="address">Address:</label>
+                                                <input type="text" class="form-control" id="address" name="address" autocomplete="off">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -159,25 +170,60 @@
                                                 <input type="text" class="form-control" id="nameU" name="name" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="gend">Gender:</label>
-                                                <input type="text" class="form-control" id="gendU" name="gender" autocomplete="off">
+                                                <label for="name">Gmail:</label>
+                                                <label class="sr-only" for="gmail">Gmail</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">@</div>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="gmailU" name="gmail">
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="role">Role:</label>
-                                                <input type="text" class="form-control" id="roleU" name="role" autocomplete="off">
+                                                <label for="">Gender:</label> <br>
+                                                <div class="custom-control custom-radio custom-control-inline" style="margin-left: 5px;">
+                                                    <input type="radio" id="genderMaleU" name="genderU" class="custom-control-input" checked value="male">
+                                                    <label class="custom-control-label" for="genderMaleU">Male</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="genderFemaleU" name="genderU" class="custom-control-input" value="female">
+                                                    <label class="custom-control-label" for="genderFemaleU">Female</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="genderOtherU" name="genderU" class="custom-control-input" value="other">
+                                                    <label class="custom-control-label" for="genderOtherU">Other</label>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="phon">Phone:</label>
-                                                <input type="text" class="form-control" id="phonU" name="phone" autocomplete="off">
+                                                <label class="mr-sm-2" for="role">Role:</label>
+                                                <select class="custom-select mr-sm-2" id="roleU" name="role">
+                                                    <option selected disabled>Choose...</option>
+                                                    <option value="chef">Chef</option>
+                                                    <option value="cashier">Cashier</option>
+                                                    <option value="waiter">Waiter</option>
+                                                    <option value="barista">Barista</option>
+                                                    <option value="manager">Manager</option>
+                                                    <option value="waiter">Waiter</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="addr">Address:</label>
-                                                <input type="text" class="form-control" id="addrU" name="address" autocomplete="off">
+                                                <label for="phone">Phone:</label>
+                                                <input type="text" class="form-control" id="phoneU" name="phone" autocomplete="off">
                                             </div>
                                             <div class="form-group">
-                                                <label for="stat">Status:</label>
-                                                <input type="text" class="form-control" id="statU" name="status" autocomplete="off">
+                                                <label class="mr-sm-2" for="status">Status:</label>
+                                                <select class="custom-select mr-sm-2" id="statusU" name="status">
+                                                    <option selected disabled>Choose...</option>
+                                                    <option value="working">Working</option>
+                                                    <option value="probation">Probation</option>
+                                                    <option value="resigned">Resigned</option>
+                                                </select>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="address">Address:</label>
+                                                <input type="text" class="form-control" id="addressU" name="address" autocomplete="off">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -202,10 +248,11 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
+                                            <th>Gmail</th>
                                             <th>Gender</th>
+                                            <th>Phone</th>
                                             <th>Role</th>
                                             <th>Address</th>
-                                            <th>Created at</th>
                                             <th>Status</th>
                                             <th class="th-action">Action</th>
                                         </tr>
@@ -214,10 +261,11 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
+                                            <th>Gmail</th>
                                             <th>Gender</th>
+                                            <th>Phone</th>
                                             <th>Role</th>
                                             <th>Address</th>
-                                            <th>Created at</th>
                                             <th>Status</th>
                                             <th class="th-action">Action</th>
                                         </tr>
@@ -228,10 +276,11 @@
                                         <tr id="employee-{{$value->id}}">
                                             <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
+                                            <td>{{$value->gmail}}</td>
                                             <td>{{$value->gender}}</td>
+                                            <td>{{$value->phone}}</td>
                                             <td>{{$value->role}}</td>
                                             <td>{{$value->address}}</td>
-                                            <td>{{$value->created_at}}</td>
                                             <td class="statusEmployee" data-id="{{$value->status}}">{{$value->status}}</td>
                                             <td class="td-action">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm">
@@ -248,7 +297,7 @@
                                         @endforeach
                                         @else
                                         <tr>
-                                            <td colspan="8">Không có dữ liệu</td>
+                                            <td colspan="8"></td>
                                         </tr>
                                         @endif
                                     </tbody>
@@ -263,25 +312,12 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            @include('admin.components.footer')
 
         </div>
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
 
     <!-- Delete Modal -->
     <div class="modal fade" id="myModal-delete" role="dialog">
@@ -309,28 +345,8 @@
     <!-- end modal -->
 
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{route('admin.login')}}">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin.components.logoutmodal')
 
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        ...
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>

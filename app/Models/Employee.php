@@ -11,6 +11,7 @@ class Employee extends Model
 {
     private $id;
     private $name = "";
+    private $gmail = "";
     private $gender = "";
     private $role = "";
     private $phone = "";
@@ -31,6 +32,10 @@ class Employee extends Model
     public function getName()
     {
         return $this->name;
+    }
+    public function getGmail()
+    {
+        return $this->gmail;
     }
     public function getGender()
     {
@@ -69,6 +74,10 @@ class Employee extends Model
     public function setName($name)
     {
         $this->name = $name;
+    }
+    public function setGmail($gmail)
+    {
+        $this->gmail = $gmail;
     }
     public function setGender($gender)
     {
@@ -116,9 +125,9 @@ class Employee extends Model
     public function insert()
     {
         $sql = 'INSERT INTO employees 
-        (name, gender, role, phone, address, status, created_at, updated_at)
-                VALUES (?,?,?,?,?,?, NOW(), NOW()) ';
-        $arr = [$this->name, $this->gender, $this->role, $this->phone, $this->address, $this->status];
+        (name, gmail, gender, role, phone, address, status, created_at, updated_at)
+                VALUES (?,?,?,?,?,?,?, NOW(), NOW()) ';
+        $arr = [$this->name, $this->gmail, $this->gender, $this->role, $this->phone, $this->address, $this->status];
         return DB::insert($sql, $arr);
     }
     // UPDATE
@@ -126,25 +135,19 @@ class Employee extends Model
     {
         $sql = 'UPDATE employees
                 SET     name = ?,
+                        gmail = ?,  
                         gender = ?,
                         role = ?,
                         phone = ?,
                         address = ?,
                         status = ?
                 WHERE id = ?  ';
-        $arr = [$this->name, $this->gender, $this->role, $this->phone, $this->address, $this->status, $this->id];
+        $arr = [$this->name, $this->gmail, $this->gender, $this->role, $this->phone, $this->address, $this->status, $this->id];
         return DB::update($sql, $arr);
     }
     public function del($id)
     {
         $sql = 'DELETE FROM employees WHERE id = ?';
         DB::delete($sql, [$id]);
-    }
-
-    public static function getWithPage($row)
-    {
-        $sql = "SELECT * FROM employees
-                LIMIT 1 OFFSET ?;";
-        return DB::select($sql, [$row]);
     }
 }

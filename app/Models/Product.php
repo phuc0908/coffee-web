@@ -6,17 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Material extends Model
+
+class Product extends Model
 {
     private $id;
     private $name = "";
     private $category = "";
+    private $price = "";
     private $image = "";
     private $created_at = "";
     private $updated_at = "";
-    private $unit = "";
+    private $description = "";
 
-    public function __construct()  {}
+    public function __construct()
+    {
+    }
 
     // Getters
     public function getId()
@@ -49,9 +53,13 @@ class Material extends Model
         return $this->updated_at;
     }
 
-    public function getUnit()
+    public function getDescription()
     {
-        return $this->unit;
+        return $this->description;
+    }
+    public function getPrice()
+    {
+        return $this->price;
     }
 
     // Setters (with basic validation for demonstration)
@@ -74,47 +82,54 @@ class Material extends Model
     {
         $this->image = $image;
     }
-    public function setUnit($unit)
+    public function setDescription($description)
     {
-        $this->unit = $unit;
+        $this->description = $description;
     }
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
     // Get all column 
     public static function showAll()
     {
-        $sql = 'SELECT * FROM materials';
+        $sql = 'SELECT * FROM products';
         return DB::select($sql);
     }
     // Get 1 column where id
     public static function get($id)
     {
-        $sql = 'SELECT * FROM materials WHERE id = ?';
+        $sql = 'SELECT * FROM products WHERE id = ?';
         return DB::select($sql, [$id]);
     }
 
     // INSERT
     public function insert()
     {
-        $sql = 'INSERT INTO materials
-                (name, category, image, unit, created_at) 
-                VALUES (?,?,?,?, NOW()) ';
-        $arr = [$this->name, $this->category, $this->image, $this->unit];
+        $sql = 'INSERT INTO products
+                (name, category, price, image, description, created_at) 
+                VALUES (?,?,?,?,?, NOW()) ';
+        $arr = [$this->name, $this->category, $this->price, $this->image, $this->description];
         return DB::insert($sql, $arr);
     }
     // UPDATE
     public function edit()
     {
-        $sql = 'UPDATE materials
+        $sql = 'UPDATE products
                 SET     name = ?,
                         category = ?,
+                        price = ?,
                         image = ?,
-                        unit = ?
+                        description = ?
                 WHERE id = ?  ';
-        $arr = [$this->name, $this->category, $this->image, $this->unit, $this->id];
+        $arr = [$this->name, $this->category, $this->price, $this->image, $this->description, $this->id];
         return DB::update($sql, $arr);
     }
+    // DELETE
     public function del($id)
     {
-        $sql = 'DELETE FROM materials WHERE id = ?';
+        $sql = 'DELETE FROM products WHERE id = ?';
         DB::delete($sql, [$id]);
     }
 }

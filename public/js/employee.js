@@ -55,7 +55,6 @@ $(document).ready(function () {
             var employeeId = $(this).data("id");
             console.log(employeeId);
             var url = "/admin/employee/edit/" + employeeId;
-            $(this).prop("disabled", true);
 
             console.log(url);
             $.ajax({
@@ -68,15 +67,21 @@ $(document).ready(function () {
                         "placeholder",
                         "Old data: " + response[0].name
                     );
-                    $("#gendU").val(response[0].gender);
-                    $("#gendU").attr(
-                        "placeholder",
-                        "Old data: " + response[0].gender
-                    );
+                    $(
+                        "input[name='genderU'][value='" +
+                            response[0].gender +
+                            "']"
+                    ).prop("checked", true);
+
                     $("#roleU").val(response[0].role);
                     $("#roleU").attr(
                         "placeholder",
                         "Old data: " + response[0].role
+                    );
+                    $("#gmailU").val(response[0].gmail);
+                    $("#gmailU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].gmail
                     );
                     $("#phonU").val(response[0].phone);
                     $("#phonU").attr(
@@ -88,10 +93,20 @@ $(document).ready(function () {
                         "placeholder",
                         "Old data: " + response[0].address
                     );
-                    $("#statU").val(response[0].status);
-                    $("#statU").attr(
+                    $("#phoneU").val(response[0].phone);
+                    $("#phoneU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].phone
+                    );
+                    $("#statusU").val(response[0].status);
+                    $("#statusU").attr(
                         "placeholder",
                         "Old data: " + response[0].status
+                    );
+                    $("#addressU").val(response[0].address);
+                    $("#addressU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].address
                     );
                     $("#edit-form").attr(
                         "action",

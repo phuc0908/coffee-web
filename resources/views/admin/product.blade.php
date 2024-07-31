@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin-Manage Materials</title>
+    <title>Admin-Manage Products</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/material.css') }}">
     <!-- Custom styles for this page -->
     <link rel="stylesheet" href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
 
 </head>
 <style>
@@ -34,6 +35,11 @@
     .td-action {
         display: flex !important;
         justify-content: space-evenly;
+    }
+
+    .modal-content {
+        width: 700px !important;
+        right: 80px;
     }
 </style>
 
@@ -60,9 +66,9 @@
                     <!-- Dialog -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Material List</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Product List</h1>
                         <button onclick="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#myModal" style="display: flex !important;align-items: center;">
-                            <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Material</span>
+                            <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Product</span>
                         </button>
 
                         <!--ADD Modal -->
@@ -70,10 +76,10 @@
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
-                                    <form action="" method="post">
+                                    <form action="{{route('admin.product.add')}}" method="post">
                                         @csrf
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Add Material</h4>
+                                            <h4 class="modal-title">Add Product</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
 
@@ -90,15 +96,21 @@
                                                 <label for="imag">URL Image:</label>
                                                 <input type="file" class="form-control-file" id="imag" name="image">
                                             </div>
+                                            <div class="form-group">
+                                                <label for="description">Description:</label>
+                                                <textarea id="editor" name="description">
+                                                </textarea>
+                                            </div>
 
                                             <div class="form-group">
-                                                <label for="unit">Unit:</label>
-                                                <input type="text" class="form-control" id="unit" name="unit">
+                                                <label for="pric">Price:</label>
+                                                <input type="text" class="form-control" id="pric" name="price">
                                             </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="add-material-btn">Add Material</button>
+                                            <button type="submit" class="btn btn-primary" id="add-Product-btn">Add Product</button>
                                         </div>
                                     </form>
                                 </div>
@@ -114,7 +126,7 @@
                                     <form id="edit-form" action="" method="post">
                                         @csrf
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Edit Material</h4>
+                                            <h4 class="modal-title">Edit Product</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
 
@@ -132,14 +144,20 @@
                                                 <input type="file" class="form-control-file" id="imagU" name="image">
                                             </div>
                                             <div class="form-group">
-                                                <label for="unit">Unit:</label>
-                                                <input type="text" class="form-control" id="unitU" name="unit">
+                                                <label for="description">Description:</label>
+                                                <textarea id="editorU" name="description">
+                                                </textarea>
                                             </div>
-                                        </div>
 
+                                            <div class="form-group">
+                                                <label for="pric">Price:</label>
+                                                <input type="text" class="form-control" id="pricU" name="price">
+                                            </div>
+
+                                        </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="edit-material-btn">Update Material</button>
+                                            <button type="submit" class="btn btn-primary" id="add-Product-btn">Update Product</button>
                                         </div>
                                     </form>
                                 </div>
@@ -151,7 +169,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Material DataTables</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Product DataTables</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -162,8 +180,8 @@
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Image</th>
-                                            <th>Created at</th>
-                                            <th>Unit</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
                                             <th class="th-action">Action</th>
                                         </tr>
                                     </thead>
@@ -173,21 +191,21 @@
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Image</th>
-                                            <th>Created at</th>
-                                            <th>Unit</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @if(!empty($materials))
-                                        @foreach ($materials as $key => $value)
-                                        <tr id="material-{{$value->id}}">
+                                        @if(!empty($products))
+                                        @foreach ($products as $key => $value)
+                                        <tr id="product-{{$value->id}}">
                                             <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
                                             <td>{{$value->category}}</td>
                                             <td>{{$value->image}}</td>
-                                            <td>{{$value->created_at}}</td>
-                                            <td>{{$value->unit}}</td>
+                                            <td>{{$value->price}}</td>
+                                            <td>{!! $value->description !!}</td>
                                             <td class="td-action">
                                                 <a href="#" class="btn btn-info btn-circle btn-sm">
                                                     <i class="fas fa-info-circle"></i>
@@ -230,10 +248,10 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content" style="margin-top: 70px;">
-                <form id="edit-form" action="" method="DELETE">
+                <form id="delete-form" action="" method="DELETE">
                     @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Delete Material</h4>
+                        <h4 class="modal-title">Delete Product</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -242,7 +260,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Material</button>
+                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Product</button>
                     </div>
                 </form>
             </div>
@@ -251,6 +269,8 @@
     <!-- end modal -->
 
     @include('admin.components.logoutmodal')
+
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
@@ -268,7 +288,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-    <script src="{{asset('js/material.js')}}"></script>
+    <script src="{{asset('js/product.js')}}"></script>
 
     <script>
         const myModal = document.getElementById('myModal')
@@ -278,6 +298,24 @@
             myInput.focus()
         })
     </script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <!-- <script>
+        ClassicEditor.create(document.querySelector("#editor"))
+            .then((editor) => {
+                console.log(editor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        ClassicEditor.create(document.querySelector("#editorU"))
+            .then((editor) => {
+                console.log(editor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    </script> -->
 
 </body>
 
