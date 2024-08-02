@@ -217,12 +217,12 @@
     </section>
 
     <!-- The Modal -->
-    <div id="dialog">
+    <div id="dialog">       
         <div id="dialog-content">
             <span class="close" onclick="closeDialog()">&times;</span>
             <img id="dialog-image" src="" alt="Product Image" style="width: 100%; height: auto;">
         </div>
-    </div>
+    </div>                                                                                                                              
 
     <footer class="footer">
         <section>

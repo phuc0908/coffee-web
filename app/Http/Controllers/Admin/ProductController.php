@@ -31,7 +31,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         // Create new obj
         $product = new Product();
         $product->setName($request->name);
@@ -39,6 +38,13 @@ class ProductController extends Controller
         $product->setPrice($request->price);
         $product->setImage($request->image);
         $product->setDescription($request->description);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('products', $imageName, 'public');
+            $product->setImage($imageName);
+        }
 
         // Add new column
         $isAdded = $product->insert();

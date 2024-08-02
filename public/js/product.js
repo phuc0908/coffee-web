@@ -96,12 +96,35 @@ $(document).ready(function () {
                         "placeholder",
                         "Old data: " + response[0].price
                     );
-                    editorInstances["editorU"].setData(response[0].description);
+                    if (response[0].description !== null) {
+                        editorInstances["editorU"].setData(
+                            response[0].description
+                        );
+                    }
                     $("#edit-form").attr(
                         "action",
                         "/admin/product/update/" + productId
                     );
                     $("#myModal-edit").modal("show");
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                },
+            });
+        });
+    }
+    function clickButtonInfo() {
+        $(".btn-info").on("click", function (e) {
+            e.preventDefault();
+            var productId = $(this).data("id");
+            var url = "/admin/product/info/" + productId;
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    $("#myModal-info").modal("show");
                 },
                 error: function (xhr) {
                     console.error(xhr.responseText);

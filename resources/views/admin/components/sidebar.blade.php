@@ -55,15 +55,9 @@
      </li>
      <!-- Nav Item - Report Tables -->
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('admin.material.index')}}">
+         <a class="nav-link" href="{{ route('admin.report.index')}}">
              <i class="fas fa-fw fa-pen"></i>
              <span>Reports</span></a>
-     </li>
-     <!-- Nav Item - Employee Tables -->
-     <li class="nav-item">
-         <a class="nav-link" href="{{ route('admin.button')}}">
-             <i class="fas fa-fw fa-button"></i>
-             <span>Button</span></a>
      </li>
 
      <!-- Nav Item - Utilities Collapse Menu -->

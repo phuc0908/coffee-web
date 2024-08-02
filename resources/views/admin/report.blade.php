@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin-Manage Materials</title>
+    <title>Admin-Manage Reports</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/material.css') }}">
     <!-- Custom styles for this page -->
     <link rel="stylesheet" href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css">
 
 </head>
 <style>
@@ -31,9 +32,46 @@
         visibility: hidden;
     }
 
-    .td-action {
+    .td-des {
+        padding: 10px !important;
+    }
+
+    .td-des figure table {
+        border-left: groove thin;
+        border-bottom: groove thin;
+    }
+
+    .td-action div {
         display: flex !important;
         justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .modal-content {
+        width: 700px !important;
+        right: 80px;
+    }
+
+    .td-image {
+        position: relative;
+        cursor: default;
+    }
+
+    .picture {
+        position: absolute;
+        display: none;
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        top: -78px;
+    }
+
+    .txtImage:hover {
+        color: rgb(77, 114, 223);
+    }
+
+    .txtImage:hover+.picture {
+        display: block;
     }
 </style>
 
@@ -41,7 +79,6 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-------------------------------------------------------------------------------- SIDEBAR -->
         @include('admin.components.sidebar')
 
@@ -60,19 +97,26 @@
                     <!-- Dialog -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Material List</h1>
-                        <button onclick="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#myModal" style="display: flex !important;align-items: center;">
-                            <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Material</span>
-                        </button>
+                        <h1 class="h3 mb-0 text-gray-800">Report List</h1>
+                        <div style="display: flex;">
+                            <button onclick="" class="d-none d-sm-inline-block btn btn-sm btn-primary 
+                            shadow-sm" data-toggle="modal" data-target="#myModal-in" style="display: flex !important;align-items: center; margin-right: 10px;">
+                                <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Report In</span>
+                            </button>
+                            <button onclick="" class="d-none d-sm-inline-block btn btn-sm btn-success 
+                            shadow-sm" data-toggle="modal" data-target="#myModal-out" style="display: flex !important;align-items: center;">
+                                <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Report Out</span>
+                            </button>
+                        </div>
 
                         <!-------------------------------------------------------------------------------- MODALS -->
-                        @include('admin.modals.materialmodal')
+                        @include('admin.modals.reportmodal')
 
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Material DataTables</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Report DataTables</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -80,51 +124,50 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Image</th>
+                                            <th>Employee/ Supplier</th>
+                                            <th>Type</th>
+                                            <th>Total Price</th>
                                             <th>Created at</th>
-                                            <th>Unit</th>
                                             <th class="th-action">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Image</th>
+                                            <th>Employee/ Supplier</th>
+                                            <th>Type</th>
+                                            <th>Total Price</th>
                                             <th>Created at</th>
-                                            <th>Unit</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @if(!empty($materials))
-                                        @foreach ($materials as $key => $value)
-                                        <tr id="material-{{$value->id}}">
+                                        @if(!empty($reports))
+                                        @foreach ($reports as $key => $value)
+                                        <tr id="report-{{$value->id}}">
                                             <td>{{$value->id}}</td>
-                                            <td>{{$value->name}}</td>
-                                            <td>{{$value->category}}</td>
-                                            <td>{{$value->image}}</td>
-                                            <td>{{$value->created_at}}</td>
-                                            <td>{{$value->unit}}</td>
+                                            <td>{{$value->employee}}</td>
+                                            <td>{{$value->type}}</td>
+                                            <td>{{$value->total_price}}</td>
+                                            <td class="td-des">{{ $value->created_at }}</td>
                                             <td class="td-action">
-                                                <a href="#" class="btn btn-info btn-circle btn-sm">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </a>
-                                                <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
-                                                    <i class=" fas fa-pen"></i>
-                                                </a>
-                                                <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-id="{{$value->id}}">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <div>
+                                                    <a href="#" class="btn btn-info btn-circle btn-sm">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </a>
+                                                    <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
+                                                        <i class=" fas fa-pen"></i>
+                                                    </a>
+                                                    <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-id="{{$value->id}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
                                         @else
                                         <tr>
-                                            <td colspan="7">Không có danh mục nào</td>
+                                            <td colspan="6">Không có danh mục nào</td>
                                         </tr>
                                         @endif
                                     </tbody>
@@ -152,19 +195,18 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content" style="margin-top: 70px;">
-                <form id="edit-form" action="" method="DELETE">
+                <form id="delete-form" action="" method="DELETE">
                     @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Delete Material</h4>
+                        <h4 class="modal-title">Delete Report</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
                     <div class="modal-body">
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Material</button>
+                        <button type="submit" class="btn btn-danger" id="confirm-delete-btn">Delete Report</button>
                     </div>
                 </form>
             </div>
@@ -190,16 +232,19 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-    <script src="{{asset('js/material.js')}}"></script>
+    <script src="{{asset('js/report.js')}}"></script>
 
     <script>
-        const myModal = document.getElementById('myModal')
-        const myInput = document.getElementById('myInput')
+        // const myModal = document.getElementById('myModal')
+        // const myInput = document.getElementById('myInput')
 
-        myModal.addEventListener('shown.bs.modal', () => {
-            myInput.focus()
-        })
+        // myModal.addEventListener('shown.bs.modal', () => {
+        //     myInput.focus()
+        // })
     </script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+
 
 </body>
 

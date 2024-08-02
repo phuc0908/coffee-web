@@ -32,14 +32,46 @@
         visibility: hidden;
     }
 
-    .td-action {
+    .td-des {
+        padding: 10px !important;
+    }
+
+    .td-des figure table {
+        border-left: groove thin;
+        border-bottom: groove thin;
+    }
+
+    .td-action div {
         display: flex !important;
         justify-content: space-evenly;
+        align-items: center;
     }
 
     .modal-content {
         width: 700px !important;
         right: 80px;
+    }
+
+    .td-image {
+        position: relative;
+        cursor: default;
+    }
+
+    .picture {
+        position: absolute;
+        display: none;
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        top: -78px;
+    }
+
+    .txtImage:hover {
+        color: rgb(77, 114, 223);
+    }
+
+    .txtImage:hover+.picture {
+        display: block;
     }
 </style>
 
@@ -71,99 +103,8 @@
                             <ion-icon name="add-circle"></ion-icon> <span style="margin-left: 3px;">Add Product</span>
                         </button>
 
-                        <!--ADD Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <form action="{{route('admin.product.add')}}" method="post">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Add Product</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="name">Name:</label>
-                                                <input type="text" class="form-control" id="name" name="name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="cate">Category:</label>
-                                                <input type="text" class="form-control" id="cate" name="category">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="imag">URL Image:</label>
-                                                <input type="file" class="form-control-file" id="imag" name="image">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <textarea id="editor" name="description">
-                                                </textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="pric">Price:</label>
-                                                <input type="text" class="form-control" id="pric" name="price">
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="add-Product-btn">Add Product</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end modal -->
-
-                        <!--EDIT Modal -->
-                        <div class="modal fade" id="myModal-edit" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <form id="edit-form" action="" method="post">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Edit Product</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="name">Name:</label>
-                                                <input type="text" class="form-control" id="nameU" name="name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="cate">Category:</label>
-                                                <input type="text" class="form-control" id="cateU" name="category">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="imag">URL Image:</label>
-                                                <input type="file" class="form-control-file" id="imagU" name="image">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description:</label>
-                                                <textarea id="editorU" name="description">
-                                                </textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="pric">Price:</label>
-                                                <input type="text" class="form-control" id="pricU" name="price">
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="add-Product-btn">Update Product</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end modal -->
+                        <!-------------------------------------------------------------------------------- MODALS -->
+                        @include('admin.modals.productmodal')
 
                     </div>
                     <!-- DataTales Example -->
@@ -203,19 +144,26 @@
                                             <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
                                             <td>{{$value->category}}</td>
-                                            <td>{{$value->image}}</td>
+                                            <td class="td-image">
+                                                <span class="txtImage">
+                                                    {{$value->image}}
+                                                </span>
+                                                <img id="dialog-image" class="picture" src="{{asset('storage/products/1722413918_milktea.png')}}" alt="Product Image">
+                                            </td>
                                             <td>{{$value->price}}</td>
-                                            <td>{!! $value->description !!}</td>
+                                            <td class="td-des">{!! $value->description !!}</td>
                                             <td class="td-action">
-                                                <a href="#" class="btn btn-info btn-circle btn-sm">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </a>
-                                                <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
-                                                    <i class=" fas fa-pen"></i>
-                                                </a>
-                                                <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-id="{{$value->id}}">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <div>
+                                                    <a href="#" class="btn btn-info btn-circle btn-sm">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </a>
+                                                    <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
+                                                        <i class=" fas fa-pen"></i>
+                                                    </a>
+                                                    <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-id="{{$value->id}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -236,12 +184,21 @@
             </div>
             <!-- End of Main Content -->
 
+            <!-------------------------------------------------------------------------------- FOOTER -->
             @include('admin.components.footer')
 
         </div>
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
+
+    <!-- The Modal Image -->
+    <!-- <div id="dialog" style="display: flex">
+        <div id="dialog-content">
+            <!-- <span class="close" onclick="closeDialog()">&times;</span> -->
+    <!-- <img id="dialog-image" src="{{asset('storage/products/1722413918_milktea.png')}}" alt="Product Image" style="width: 100px; height: 100px;">
+        </div>
+    </div> -->
 
     <!-- Delete Modal -->
     <div class="modal fade" id="myModal-delete" role="dialog">
@@ -300,22 +257,7 @@
     </script>
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-    <!-- <script>
-        ClassicEditor.create(document.querySelector("#editor"))
-            .then((editor) => {
-                console.log(editor);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        ClassicEditor.create(document.querySelector("#editorU"))
-            .then((editor) => {
-                console.log(editor);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    </script> -->
+
 
 </body>
 
