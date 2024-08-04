@@ -86,8 +86,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        (new Employee)->del($id);
+        $employee = new Employee();
+        $employee->setId($id);
+        $isDeleted = $employee->del($id);
         return response()->json(['success' => true, 'message' => 'Deleted successfully']);
-        // return redirect()->back()->with('alertDelete', 'Xóa thành công');
     }
 }

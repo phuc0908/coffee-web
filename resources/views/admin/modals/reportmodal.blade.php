@@ -15,7 +15,12 @@
                          <label class="mr-sm-2" for="name">Supplier:</label>
                          <select class="custom-select mr-sm-2" id="supplier" name="supplier">
                              <option selected disabled>Choose...</option>
-                             <option value="chef">Chef</option>
+                             @if(!empty($suppliers))
+                             @foreach ($suppliers as $key => $value)
+                             <option value="{{$value->id}}">{{$value->id}}: {{$value->name}}</option>
+                             @endforeach
+                             <option value="" disabled></option>
+                             @endif
                          </select>
                      </div>
                      <input type="hidden" name="type" value="in">
@@ -55,6 +60,8 @@
  </div>
  <!-- end modal -->
 
+
+
  <!--ADD Modal OUT-->
  <div class="modal fade" id="myModal-out" role="dialog">
      <div class="modal-dialog">
@@ -72,7 +79,12 @@
                          <label class="mr-sm-2" for="name">Employee:</label>
                          <select class="custom-select mr-sm-2" id="employee" name="employee">
                              <option selected disabled>Choose...</option>
-                             <option value="chef">DDDDD</option>
+                             @if(!empty($employees))
+                             @foreach ($employees as $key => $value)
+                             <option value="{{$value->id}}">{{$value->id}}: {{$value->name}}</option>
+                             @endforeach
+                             <option value="" disabled></option>
+                             @endif
                          </select>
                      </div>
                      <input type="hidden" name="type" value="out">

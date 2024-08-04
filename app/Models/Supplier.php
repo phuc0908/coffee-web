@@ -6,83 +6,75 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Material extends Model
+class Supplier extends Model
 {
     // Get all column 
     public static function showAll()
     {
-        $sql = 'SELECT * FROM materials';
+        $sql = 'SELECT * FROM suppliers';
         return DB::select($sql);
     }
     // Get 1 column where id
     public static function get($id)
     {
-        $sql = 'SELECT * FROM materials WHERE id = ?';
+        $sql = 'SELECT * FROM suppliers WHERE id = ?';
         return DB::select($sql, [$id]);
     }
 
     // INSERT
     public function insert()
     {
-        $sql = 'INSERT INTO materials
-                (name, category, image, unit, created_at) 
+        $sql = 'INSERT INTO suppliers 
+        (name, address, phone, gmail, created_at)
                 VALUES (?,?,?,?, NOW()) ';
-        $arr = [$this->name, $this->category, $this->image, $this->unit];
+        $arr = [$this->name, $this->address, $this->phone, $this->gmail];
         return DB::insert($sql, $arr);
     }
     // UPDATE
     public function edit()
     {
-        $sql = 'UPDATE materials
+        $sql = 'UPDATE suppliers
                 SET     name = ?,
-                        category = ?,
-                        image = ?,
-                        unit = ?,
-                        updated_at = NOW()
+                        address = ?,
+                        phone = ?,
+                        gmail = ?,                          
+                        updated_at = NOW() 
                 WHERE id = ?  ';
-        $arr = [$this->name, $this->category, $this->image, $this->unit, $this->id];
+        $arr = [$this->name, $this->address, $this->phone, $this->gmail, $this->id];
         return DB::update($sql, $arr);
     }
     public function del()
     {
-        $sql = 'DELETE FROM materials WHERE id = ?';
+        $sql = 'DELETE FROM suppliers WHERE id = ?';
         DB::delete($sql, [$this->id]);
     }
 
     private $id;
     private $name = "";
-    private $category = "";
-    private $image = "";
-    private $unit = "";
+    private $gmail = "";
+    private $address = "";
+    private $phone = "";
 
-    public function __construct()
-    {
-    }
-
-    // Getters
+    /// Getters
     public function getId()
     {
         return $this->id;
     }
-
     public function getName()
     {
         return $this->name;
     }
-
-    public function getCategory()
+    public function getGmail()
     {
-        return $this->category;
+        return $this->gmail;
     }
-
-    public function getImage()
+    public function getPhone()
     {
-        return $this->image;
+        return $this->phone;
     }
-
-    public function getUnit()
+    public function getAddress()
     {
-        return $this->unit;
+        return $this->address;
     }
 
     // Setters (with basic validation for demonstration)
@@ -90,23 +82,20 @@ class Material extends Model
     {
         $this->id = $id;
     }
-
     public function setName($name)
     {
         $this->name = $name;
     }
-
-    public function setCategory($category)
+    public function setGmail($gmail)
     {
-        $this->category = $category;
+        $this->gmail = $gmail;
     }
-
-    public function setImage($image)
+    public function setPhone($phone)
     {
-        $this->image = $image;
+        $this->phone = $phone;
     }
-    public function setUnit($unit)
+    public function setAddress($address)
     {
-        $this->unit = $unit;
+        $this->address = $address;
     }
 }

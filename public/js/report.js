@@ -13,31 +13,42 @@ $(document).ready(function () {
     const clearIn = document.getElementById("clear-in");
     const clearOut = document.getElementById("clear-out");
 
+    var dataContainer = document.getElementById("data-container");
+    var data = JSON.parse(dataContainer.getAttribute("data-json"));
+
+    // Hàm để tạo một hàng mới với dữ liệu
     function row() {
+        console.log(data);
         return `
-         <td class="stt"></td>
-        <td>
-            <select class="custom-select mr-sm-2 name" name="material[]">
-                <option selected disabled>Chọn...</option>
-                <option value="chef">Chef</option>
-                <option value="chef">Chef</option>
-            </select>
-        </td>
-        <td>
-            <div class="form-group">
-                <input type="number" class="form-control price" name="price[]">
-            </div>
-        </td>
-        <td>
-            <div class="form-group">
-                <input type="number" class="form-control numberOfUnit" name="numberOfUnit[]">
-            </div>
-        </td>
-        <td>
-            <a href="" class="btn btn-danger btn-circle btn-sm btn-delete-row" style="margin-top: 5px;">
-                <i class="fas fa-trash"></i>
-            </a>
-        </td>
+        <tr>
+            <td class="stt"></td>
+            <td>
+                <select class="custom-select mr-sm-2 name" name="materials[]">
+                    <option selected disabled>----Choose------</option>
+                    ${data
+                        .map(
+                            (item) =>
+                                `<option value="${item.id}">${item.id}: ${item.name}</option>`
+                        )
+                        .join("")}
+                </select>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control price" name="prices[]">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" class="form-control numberOfUnit" name="numberOfUnits[]">
+                </div>
+            </td>
+            <td>
+                <a href="" class="btn btn-danger btn-circle btn-sm btn-delete-row" style="margin-top: 5px;">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
     `;
     }
     // REPORT IN CLICK
@@ -86,4 +97,72 @@ $(document).ready(function () {
             sttCell.textContent = index + 1;
         });
     }
+
+    const typeList = document.querySelectorAll(".typeReport");
+    typeList.forEach((element) => {
+        var type = element.dataset.type;
+
+        switch (type) {
+            case "out":
+                element.style.color = "rgb(23, 166, 115)";
+                break;
+            case "in":
+                element.style.color = "rgb(224, 45, 27)";
+                break;
+            default:
+                break;
+        }
+    });
+
+    const btnDeletes = document.querySelectorAll(".btn-delete");
+
+    function clickButtonDelete() {
+        btnDeletes.forEach((element) => {
+            element.addEventListener("click", function (e) {
+                e.preventDefault();
+                $("#myModal-delete").modal("show");
+
+                var id = $(this).data("id");
+                console.log("Report-delete-Id :", id);
+
+                $("#confirm-delete-btn").data("id", id);
+
+                // Confirm delete Button
+                $("#confirm-delete-btn").click(function (e) {
+                    e.preventDefault();
+                    var deleteId = $(this).data("id");
+                    var type = $(this).data("type");
+                    console.log("Report-confirm-delete-Id :", deleteId);
+                    console.log("Report-confirm-delete-type :", type);
+
+                    $.ajax({
+                        url:
+                            "/admin/report/destroy/" +
+                            deleteId +
+                            "/type=" +
+                            type,
+                        type: "DELETE",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                $("#report-" + deleteId).remove();
+                                $("#myModal-delete").modal("hide");
+                                console.log("Report deleted successfully!");
+                            } else {
+                                console.error(
+                                    "Error deleting report:",
+                                    response.message
+                                );
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("Error:", textStatus, errorThrown);
+                        },
+                    });
+                });
+            });
+        });
+    }
+
+    clickButtonDelete();
 });

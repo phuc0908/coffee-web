@@ -53,14 +53,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Request $request)
@@ -80,17 +72,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Create new obj
-        $product = new Product();
-        $product->setId($request->id);
-        $product->setName($request->name);
-        $product->setCategory($request->category);
-        $product->setPrice($request->price);
-        $product->setImage($request->image);
-        $product->setDescription($request->description);
+        if ($request->id === $id) {
+            // Create new obj
+            $product = new Product();
+            $product->setId($id);
+            $product->setName($request->name);
+            $product->setCategory($request->category);
+            $product->setPrice($request->price);
+            $product->setImage($request->image);
+            $product->setDescription($request->description);
 
-        // Update this column
-        $isUpdated = $product->edit();
+            // Update this column
+            $isUpdated = $product->edit();
+        } else {
+            dd("update ProductController error");
+        }
         // Finally
         return redirect(route('admin.product.index'));
     }

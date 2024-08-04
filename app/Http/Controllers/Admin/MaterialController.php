@@ -75,7 +75,9 @@ class MaterialController extends Controller
      */
     public function destroy(string $id)
     {
-        (new Material)->del($id);
+        $material = new Material();
+        $material->setId($id);
+        $isDeleted =  $material->del($id);
         return response()->json(['success' => true, 'message' => 'Deleted successfully']);
         // return redirect()->back()->with('alertDelete', 'Xóa thành công');
     }

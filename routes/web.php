@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SupplierController;
 
 Route::prefix("")->group(function () {
     Route::get('/', [HomeController::class, "index"])->name("index");
@@ -56,6 +57,14 @@ Route::prefix("admin")->group(function () {
         Route::post('update/{id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::delete('destroy/{id}', [EmployeeController::class, 'destroy'])->name('admin.employee.delete');
     });
+    // -------------------------------------------------------------------------------------------------------> SUPPLLIERs
+    Route::prefix("supllier")->group(function () {
+        Route::get('/', [SupplierController::class, "create"])->name("admin.supplier.index");
+        Route::post('/add', [SupplierController::class, 'store'])->name("admin.supplier.add");
+        Route::get('edit/{id}', [SupplierController::class, 'edit'])->name('admin.supplier.edit');
+        Route::post('update/{id}', [SupplierController::class, 'update'])->name('admin.supplier.update');
+        Route::delete('destroy/{id}', [SupplierController::class, 'destroy'])->name('admin.supplier.delete');
+    });
 
     // -------------------------------------------------------------------------------------------------------> EMPLOYEEs
     Route::prefix("report")->group(function () {
@@ -63,6 +72,6 @@ Route::prefix("admin")->group(function () {
         Route::post('/add', [ReportController::class, 'store'])->name("admin.report.add");
         Route::get('edit/{id}', [ReportController::class, 'edit'])->name('admin.report.edit');
         Route::post('update/{id}', [ReportController::class, 'update'])->name('admin.report.update');
-        Route::delete('destroy/{id}', [ReportController::class, 'destroy'])->name('admin.report.delete');
+        Route::delete('destroy/{id}/type={type}', [ReportController::class, 'destroy'])->name('admin.report.delete');
     });
 });
