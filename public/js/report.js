@@ -98,22 +98,6 @@ $(document).ready(function () {
         });
     }
 
-    const typeList = document.querySelectorAll(".typeReport");
-    typeList.forEach((element) => {
-        var type = element.dataset.type;
-
-        switch (type) {
-            case "out":
-                element.style.color = "rgb(23, 166, 115)";
-                break;
-            case "in":
-                element.style.color = "rgb(224, 45, 27)";
-                break;
-            default:
-                break;
-        }
-    });
-
     const btnDeletes = document.querySelectorAll(".btn-delete");
 
     function clickButtonDelete() {
@@ -164,5 +148,68 @@ $(document).ready(function () {
         });
     }
 
+    function clickButtonEdit() {
+        $(".btn-warning").on("click", function (e) {
+            e.preventDefault();
+            var reportId = $(this).data("id");
+            console.log(reportId);
+            var url = "/admin/report/edit/" + reportId;
+
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    console.log("success");
+                    $("#nameU").val(response[0].name);
+                    $("#nameU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].name
+                    );
+
+                    $("#roleU").val(response[0].role);
+                    $("#roleU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].role
+                    );
+                    $("#gmailU").val(response[0].gmail);
+                    $("#gmailU").attr(
+                        "placeholder",
+                        "Old data: " + response[0].gmail
+                    );
+
+                    $("#edit-form").attr(
+                        "action",
+                        "/admin/report/update/" + reportId
+                    );
+                    $("#myModal-edit").modal("show");
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                },
+            });
+        });
+    }
+
     clickButtonDelete();
+    clickButtonEdit();
 });
+
+function updateTypeColors() {
+    const typeList = document.querySelectorAll(".typeReport");
+    typeList.forEach((element) => {
+        var type = element.dataset.type;
+        switch (type) {
+            case "out":
+                element.style.color = "rgb(23, 166, 115)";
+                break;
+            case "in":
+                element.style.color = "rgb(224, 45, 27)";
+                break;
+            default:
+                break;
+        }
+    });
+}
+updateTypeColors();

@@ -217,12 +217,12 @@
     </section>
 
     <!-- The Modal -->
-    <div id="dialog">       
+    <div id="dialog">
         <div id="dialog-content">
             <span class="close" onclick="closeDialog()">&times;</span>
-            <img id="dialog-image" src="" alt="Product Image" style="width: 100%; height: auto;">
+            <img id="dialog-image" src="{{asset('img/menu.jpg')}}" alt="Product Image" style="width: 100%; height: auto;">
         </div>
-    </div>                                                                                                                              
+    </div>
 
     <footer class="footer">
         <section>
@@ -359,10 +359,8 @@
     });
 </script>
 <script>
-    var imageSrc = 'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/433132557_386899464295124_3702882529260110136_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH4Yfrshlsgc82DVWIrwAWjbIwv95FxlQhsjC_3kXGVCK3RgoGC1JTA9RcVyIsOu_G5YClDwM57OyEQUvEFEDhx&_nc_ohc=BVz3NbCXruYQ7kNvgGSaF6i&_nc_ht=scontent.fdad1-4.fna&cb_e2o_trans=t&oh=00_AYAj9ZlPdNMbIyw5UDiXz7VFm5xU_8upGnp5UsB6s2Z47A&oe=669B9FFF'
-
     function openDialog() {
-        document.getElementById('dialog-image').src = imageSrc;
+        // document.getElementById('dialog-image').src = imageSrc;
         document.getElementById('dialog').style.display = 'block';
     }
 

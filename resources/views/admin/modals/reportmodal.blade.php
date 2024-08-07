@@ -132,38 +132,53 @@
              <form id="edit-form" action="" method="post">
                  @csrf
                  <div class="modal-header">
-                     <h4 class="modal-title">Edit report</h4>
+                     <h4 class="modal-title">Edit Report</h4>
                      <button type="button" class="close" data-dismiss="modal">&times;</button>
                  </div>
 
                  <div class="modal-body">
                      <div class="form-group">
-                         <label for="name">Name:</label>
-                         <input type="text" class="form-control" id="nameU" name="name">
+                         <label class="mr-sm-2" for="name">Employee:</label>
+                         <select class="custom-select mr-sm-2" id="employee" name="employee">
+                             <option selected disabled>Choose...</option>
+                             @if(!empty($employees))
+                             @foreach ($employees as $key => $value)
+                             <option value="{{$value->id}}">{{$value->id}}: {{$value->name}}</option>
+                             @endforeach
+                             <option value="" disabled></option>
+                             @endif
+                         </select>
                      </div>
+                     <input type="hidden" name="type" value="out">
+                     <br>
+                     <h4>Report Details</h4>
                      <div class="form-group">
-                         <label for="cate">Category:</label>
-                         <input type="text" class="form-control" id="cateU" name="category">
+                         <div class="table-responsive">
+                             <table class="table table-add-out">
+                                 <thead>
+                                     <th>STT</th>
+                                     <th>Material</th>
+                                     <th>Price</th>
+                                     <th>Number Of Unit</th>
+                                     <th></th>
+                                 </thead>
+                                 <tbody>
+                                 </tbody>
+                                 <tfoot>
+                                     <th colspan="3">
+                                         <button class="btn btn-danger btn-sm" id="clear-out">Clear</button>
+                                     </th>
+                                     <th colspan="2">
+                                         <button class="btn btn-dark btn-sm" id="add-row-out">Add Row</button>
+                                     </th>
+                                 </tfoot>
+                             </table>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <label for="imag">URL Image:</label>
-                         <input type="file" class="form-control-file" id="imagU" name="image">
-                     </div>
-                     <div class="form-group">
-                         <label for="description">Description:</label>
-                         <textarea id="editorU" name="description">
-                                                </textarea>
-                     </div>
-
-                     <div class="form-group">
-                         <label for="pric">Price:</label>
-                         <input type="text" class="form-control" id="pricU" name="price">
-                     </div>
-
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary" id="add-report-btn">Update report</button>
+                     <button type="submit" class="btn btn-primary" id="add-report-btn">Update Report</button>
                  </div>
              </form>
          </div>

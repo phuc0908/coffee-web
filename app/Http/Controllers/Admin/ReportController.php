@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Material;
 use App\Models\Report;
+use App\Models\Employee;
 use App\Models\ReportDetail;
 
 class ReportController extends Controller
@@ -27,9 +28,9 @@ class ReportController extends Controller
         $reports = $report->showAll();
         $material = new Material();
         $materials = $material->showAll();
-        $report = new report();
-        $reports = $report->showAll();
-        return view('admin.report', compact('reports', 'materials', 'reports'));
+        $employee = new Employee();
+        $employees = $employee->showAll();
+        return view('admin.report', compact('reports', 'materials', 'employees'));
     }
 
     /**
@@ -41,23 +42,38 @@ class ReportController extends Controller
         $report = new Report();
 
         $report->setTotalPrice(1.1);
-        $report->setreport($request->report);
+        $report->setEmployee($request->employee);
         $report->setSupplier($request->supplier);
 
         $isAdded = $report->insert($request->type);
-        $this->storeDetail($request);
+
+        // REPORT DETAIL
+        $id_report = $report->getIdNewest($request->type)[0]->id;
+        $this->storeDetail($id_report, $request);
         // Finally
         return redirect(route('admin.report.index'));
     }
 
-    public function storeDetail(Request $request)
+    public function storeDetail($id_report, Request $request)
     {
-        dd($request->materials[0]);
         $report_detail = new ReportDetail();
 
+        $materials = $request->materials;
+        $prices = $request->prices;
+        $numberOfUnits = $request->numberOfUnits;
 
+        foreach ($materials as $key => $material) {
+            $price = $prices[$key];
+            $numberOfUnit = $numberOfUnits[$key];
 
-        $isAdded = $report_detail->insert();
+            $report_detail->setIdMaterial($material);
+            $report_detail->setPrice($price);
+            $report_detail->setNumberOfUnit($numberOfUnit);
+            $report_detail->setIdReport($id_report);
+            $report_detail->setType($request->type);
+            // insert
+            $isAdded = $report_detail->insert();
+        }
     }
 
     /**
@@ -71,9 +87,17 @@ class ReportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $id = $request->id;
+        $type = $request->type;
+        $report = (new Report)->get($id, $type);
+
+        if ($report) {
+            return response()->json($report);
+        } else {
+            return response()->json(['error' => 'report not found'], 404);
+        }
     }
 
     /**
@@ -81,7 +105,22 @@ class ReportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->id === $id) {
+            $type = $request->type;
+            // Create new obj
+            $report = new Report();
+            $report->setId($id);
+            $report->setTotalPrice($request->total_price);
+            $report->setEmployee($request->employee);
+            $report->setSupplier($request->supplier);
+
+            // Update this column
+            $isUpdated = $report->edit($type);
+        } else {
+            dd("update reportController error");
+        }
+        // Finally
+        return redirect(route('admin.report.index'));
     }
 
     /**

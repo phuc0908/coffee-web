@@ -98,7 +98,26 @@
      <div class="modal-dialog">
          <!-- Modal content-->
          <div class="modal-content">
-            
+             <form id="edit-form" action="" method="post">
+                 @csrf
+                 <div class="modal-header">
+                     <h4 class="modal-title">Info Product</h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 </div>
+
+                 <div class="modal-body">
+                     <div class="card">
+                         <img src="{{asset('img/coffees.png')}}" class="card-img-top" alt="...">
+
+                         <div class="card-body">
+                             <h5 class="card-title" id="title" style="font-weight: 900;"></h5>
+                             <p class="card-text" id="description"></p>
+                         </div>
+                     </div>
+                     <div style="display: flex; justify-content: end; margin-top: 20px;"><a href="#" class="btn btn-primary">Add cart</a></div>
+
+                 </div>
+             </form>
          </div>
      </div>
  </div>

@@ -47,6 +47,10 @@
         align-items: center;
     }
 
+    .td-action {
+        width: 100px !important;
+    }
+
     .modal-content {
         width: 700px !important;
         right: 80px;
@@ -72,6 +76,11 @@
 
     .txtImage:hover+.picture {
         display: block;
+    }
+
+    .div-action {
+        display: flex;
+        flex-wrap: wrap;
     }
 </style>
 
@@ -153,9 +162,9 @@
                                             <td>{{$value->price}}</td>
                                             <td class="td-des">{!! $value->description !!}</td>
                                             <td class="td-action">
-                                                <div>
-                                                    <a href="#" class="btn btn-info btn-circle btn-sm">
-                                                        <i class="fas fa-info-circle"></i>
+                                                <div class="div-action">
+                                                    <a href="#" class="btn btn-info btn-circle btn-sm" data-id="{{$value->id}}">
+                                                        <i class=" fas fa-info-circle"></i>
                                                     </a>
                                                     <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
                                                         <i class=" fas fa-pen"></i>

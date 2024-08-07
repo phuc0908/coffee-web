@@ -13,7 +13,7 @@ class ReportDetail extends Model
     public function get($id)
     {
         $sql = "SELECT * 
-                FROM {$this->nameTable} 
+                FROM report_details 
                 WHERE id = ?";
         return DB::select($sql, [$id]);
     }
@@ -23,10 +23,11 @@ class ReportDetail extends Model
         $reportObj = new Report();
         $report = $reportObj->nameReport($type);
         $person = $reportObj->personInReport($type);
+        $idName = $reportObj->idNameReport($type);
 
         $sql = "SELECT rd.*, r.{$person}, r.created_at, r.total_price 
-                FROM {$this->nameTable} rd
-                JOIN {$report} r ON rd.id_report = r.id
+                FROM report_details rd
+                JOIN {$report} r ON rd.{$idName} = r.id
                 WHERE r.id = ?
                 ";
         return DB::select($sql, [$id_report]);
@@ -35,20 +36,19 @@ class ReportDetail extends Model
     // INSERT
     public function insert()
     {
-        $sql = "INSERT INTO {$this->nameTable}
-                () 
-                VALUES (?,?, NOW()) ";
-        $arr = [$this->name];
+        $sql = "INSERT INTO report_details
+                (id_material, id_report, price, number_of_unit, type) 
+                VALUES (?,?,?,?,?) ";
+        $arr = [$this->id_material, $this->id_report, $this->price, $this->number_of_unit, $this->type];
         return DB::insert($sql, $arr);
     }
 
-
     private $id_material;
-    private $id_report;
+    private $id_report_in;
+    private $id_report_out;
     private $price;
     private $number_of_unit;
     private $type;
-    private $nameTable = "report_details";
 
     public function __construct()
     {
@@ -60,9 +60,13 @@ class ReportDetail extends Model
         return $this->id_material;
     }
 
-    public function getIdReport()
+    public function getIdReportIn()
     {
-        return $this->id_report;
+        return $this->id_report_in;
+    }
+    public function getIdReportOut()
+    {
+        return $this->id_report_out;
     }
 
     public function getPrice()
@@ -86,9 +90,14 @@ class ReportDetail extends Model
         $this->id_material = $id_material;
     }
 
-    public function setIdReport($id_report)
+    public function setIdReportIn($id_report_in)
     {
-        $this->id_report = $id_report;
+        $this->id_report_in = $id_report_in;
+    }
+
+    public function setIdReportUut($id_report_out)
+    {
+        $this->id_report_out = $id_report_out;
     }
 
     public function setPrice($price)

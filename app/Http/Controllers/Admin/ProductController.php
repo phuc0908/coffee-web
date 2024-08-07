@@ -66,6 +66,17 @@ class ProductController extends Controller
             return response()->json(['error' => 'product not found'], 404);
         }
     }
+    public function get(Request $request)
+    {
+        $id = $request->id;
+        $product = (new Product)->get($id);
+
+        if ($product) {
+            return response()->json($product);
+        } else {
+            return response()->json(['error' => 'product not found'], 404);
+        }
+    }
 
     /**
      * Update the specified resource in storage.

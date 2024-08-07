@@ -13,38 +13,38 @@ class Report extends Model
     public static function showAll()
     {
         $sql = "SELECT 
-                    sri.id, 
-                    sri.created_at, 
+                    ri.id, 
+                    ri.created_at, 
                     s.name AS name, 
-                    sri.total_price, 
+                    ri.total_price, 
                     'in' AS type 
                 FROM 
-                    reports_in sri
+                    reports_in ri
                 JOIN 
-                    suppliers s ON sri.id_supplier = s.id
+                    suppliers s ON ri.id_supplier = s.id
 
                 UNION ALL
 
                 SELECT 
-                    sro.id, 
-                    sro.created_at, 
+                    ro.id, 
+                    ro.created_at, 
                     e.name AS name, 
-                    sro.total_price, 
+                    ro.total_price, 
                     'out' AS type 
                 FROM 
-                    reports_out sro
+                    reports_out ro
                 JOIN 
-                    employees e ON sro.id_employee = e.id;";
+                    employees e ON ro.id_employee = e.id;";
         return DB::select($sql);
     }
     public function getAllReportIn()
     {
-        $sql = 'SELECT * FROM stock_report_in';
+        $sql = 'SELECT * FROM reports_in';
         return DB::select($sql);
     }
     public function getAllReportOut()
     {
-        $sql = 'SELECT * FROM stock_report_out';
+        $sql = 'SELECT * FROM reports_out';
         return DB::select($sql);
     }
 
@@ -55,6 +55,15 @@ class Report extends Model
 
         $sql = 'SELECT * FROM ' + $report + ' WHERE id = ?';
         return DB::select($sql, [$id]);
+    }
+    // Get 1 column where id
+    public function getIdNewest($type)
+    {
+        $report = $this->nameReport($type);
+
+        $sql = "SELECT * FROM {$report} ORDER BY id DESC LIMIT 1";
+
+        return DB::select($sql);
     }
 
     // INSERT
@@ -96,6 +105,10 @@ class Report extends Model
     public function nameReport($type): String
     {
         return $type == "in" ? "reports_in" : "reports_out";
+    }
+    public function idNameReport($type): String
+    {
+        return $type == "in" ? "id_reports_in" : "id_reports_out";
     }
     public function personInReport($type): String
     {

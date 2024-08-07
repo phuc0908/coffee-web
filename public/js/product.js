@@ -3,6 +3,7 @@ $.ajaxSetup({
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     },
 });
+
 $(document).ready(function () {
     var table = $("#dataTable").DataTable();
     const btnDeletes = document.querySelectorAll(".btn-delete");
@@ -124,6 +125,11 @@ $(document).ready(function () {
                 type: "GET",
                 dataType: "json",
                 success: function (response) {
+                    console.log(response[0].name);
+
+                    $("#title").html(response[0].name);
+                    $("#description").html(response[0].description);
+
                     $("#myModal-info").modal("show");
                 },
                 error: function (xhr) {
@@ -134,9 +140,11 @@ $(document).ready(function () {
     }
     clickButtonDelete();
     clickButtonUpdate();
+    clickButtonInfo();
 
     table.on("draw", function () {
         clickButtonDelete();
         clickButtonUpdate();
+        clickButtonInfo();
     });
 });

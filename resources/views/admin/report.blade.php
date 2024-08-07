@@ -128,7 +128,7 @@
                                             <th>ID</th>
                                             <th>Employee/ Supplier</th>
                                             <th>Type</th>
-                                            <th>Total Price</th>
+                                            <th>Total Price (VND)</th>
                                             <th>Created at</th>
                                             <th class="th-action">Action</th>
                                         </tr>
@@ -138,7 +138,7 @@
                                             <th>ID</th>
                                             <th>Employee/ Supplier</th>
                                             <th>Type</th>
-                                            <th>Total Price</th>
+                                            <th>Total Price (VND)</th>
                                             <th>Created at</th>
                                             <th>Action</th>
                                         </tr>
@@ -150,7 +150,9 @@
                                             <td>{{$value->id}}</td>
                                             <td>{{$value->name}}</td>
                                             <td class="typeReport" data-type="{{$value->type}}">{{strtoupper($value->type)}}</td>
-                                            <td>{{$value->total_price}}</td>
+                                            <td class="price">
+                                                <span>{{ number_format($value->total_price, 2, '.', ',') }} </span>
+                                            </td>
                                             <td class="td-des">{{ $value->created_at }}</td>
                                             <td class="td-action">
                                                 <div>
