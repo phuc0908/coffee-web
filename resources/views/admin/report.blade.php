@@ -159,9 +159,9 @@
                                                     <a href="#" class="btn btn-info btn-circle btn-sm">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
-                                                    <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
+                                                    <!-- <a href="" class="btn btn-warning btn-circle btn-sm" data-id="{{$value->id}}">
                                                         <i class=" fas fa-pen"></i>
-                                                    </a>
+                                                    </a> -->
                                                     <a href="" class="btn btn-danger btn-circle btn-sm btn-delete" data-type="{{$value->type}}" data-id="{{$value->id}}">
                                                         <i class="fas fa-trash"></i>
                                                     </a>

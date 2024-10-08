@@ -156,12 +156,14 @@ $(document).ready(function () {
             var url = "/admin/report/edit/" + reportId;
 
             console.log(url);
+
             $.ajax({
                 url: url,
                 type: "GET",
                 dataType: "json",
                 success: function (response) {
                     console.log("success");
+                    console.log(response);
                     $("#nameU").val(response[0].name);
                     $("#nameU").attr(
                         "placeholder",

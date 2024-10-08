@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $r)
+    public function index()
     {
-        return view('index');
+        $product = new Product();
+        $products = $product->showAll();
+        return view('index', compact('products'));
     }
     public function showAbout()
     {
